@@ -13,6 +13,11 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.BINDING_ERRORS;
+import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.EXCEPTION;
+import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
+import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.STACK_TRACE;
+
 @Controller
 @RequestMapping("${server.error.path:${error.path:/error}}")
 public class ErrorController extends AbstractErrorController {
@@ -23,10 +28,11 @@ public class ErrorController extends AbstractErrorController {
 
     @RequestMapping
     public ResponseEntity<ErrorResponse> error(HttpServletRequest request) {
-        Map<String, Object> errorAttributes = getErrorAttributes(request, ErrorAttributeOptions.defaults());
+        Map<String, Object> errorAttributes = getErrorAttributes(request, ErrorAttributeOptions.of(EXCEPTION, STACK_TRACE, MESSAGE, BINDING_ERRORS));
         String message = errorAttributes != null ? errorAttributes.getOrDefault("message", "").toString() : "";
         HttpStatus httpStatus = getStatus(request);
-        ErrorResponse errorResponse = new ErrorResponse(ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), httpStatus.value(), httpStatus.getReasonPhrase(), message);
+        ErrorResponse errorResponse = new ErrorResponse(ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), httpStatus.value(),
+                httpStatus.getReasonPhrase(), message);
         return ResponseEntity.status(httpStatus).body(errorResponse);
     }
 
@@ -40,7 +46,6 @@ public class ErrorController extends AbstractErrorController {
         private final int status;
         private final String error;
         private final String message;
-
 
         private ErrorResponse(String timestamp, int status, String error, String message) {
             this.timestamp = timestamp;

@@ -15,13 +15,12 @@ public class UserDTO {
 
     public UserDTO(User user) {
         this.id = user.getId();
-        this.userid=user.getUserId();
+        this.userid = user.getUserId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
-        this.passwordDetails =  setValue(user.getPassword());
+        this.passwordDetails = setValue(user.getPassword());
     }
-
 
     public String getUserid() {
         return userid;
@@ -32,10 +31,10 @@ public class UserDTO {
     }
 
     private PasswordDTO setValue(Password userProfile) {
-         PasswordDTO passwordDTO = new PasswordDTO();
-         passwordDTO.setSalt(userProfile.getSalt());
-         passwordDTO.setPassword(userProfile.getPassword());
-         return passwordDTO;
+        PasswordDTO passwordDTO = new PasswordDTO();
+        passwordDTO.setSalt(userProfile.getSalt());
+        passwordDTO.setPassword(userProfile.getPassword());
+        return passwordDTO;
     }
 
     public PasswordDTO getPasswordDetails() {

@@ -21,10 +21,10 @@ public class VerifySignIn {
         this.userRepository = userRepository;
     }
 
-    public boolean verify(final Password password,final String userInput ) {
-            String saltHash = getHash(password.getSalt() + userInput);
-            String expectedHash = getHash(saltHash + pepperValue);
-            return expectedHash.equals(password.getPassword());
+    public boolean verify(final Password password, final String userInput) {
+        String saltHash = getHash(password.getSalt() + userInput);
+        String expectedHash = getHash(saltHash + pepperValue);
+        return expectedHash.equals(password.getPassword());
     }
 
 }

@@ -26,15 +26,13 @@ public class User {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Column(unique = true,name = "EMAIL")
+    @Column(unique = true, name = "EMAIL")
     private String email;
 
-    @Column(unique = true,name = "USER_ID")
+    @Column(unique = true, name = "USER_ID")
     private String userId;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
-            mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     @JsonManagedReference
     private Password password;
 

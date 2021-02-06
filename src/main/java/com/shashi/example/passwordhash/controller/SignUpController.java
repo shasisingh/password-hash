@@ -5,11 +5,12 @@ import com.shashi.example.passwordhash.model.SignUpDTO;
 import com.shashi.example.passwordhash.model.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+@ControllerAdvice
 @RestController
 public class SignUpController {
 
@@ -21,8 +22,8 @@ public class SignUpController {
     }
 
     @PostMapping(value = "signup")
-    public String signUp(@RequestBody  @NonNull SignUpDTO signUpDetails) {
+    public String signUp(@RequestBody @NonNull SignUpDTO signUpDetails) {
         User user = factory.create(signUpDetails);
-        return "userId ["+user.getUserId()+"] created successfully!";
+        return "userId [" + user.getUserId() + "] created successfully!";
     }
 }
